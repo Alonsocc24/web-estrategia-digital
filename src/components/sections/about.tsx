@@ -49,7 +49,7 @@ export default function AboutSection() {
           </div>
           <div className="relative h-96 w-full overflow-hidden rounded-lg shadow-lg">
             <Image
-              src="https://placehold.co/600x800"
+              src="https://firebasestorage.googleapis.com/v0/b/app-proy-1e4a3.appspot.com/o/2c9c7f21-789a-4c28-98e8-6e3e574c8402.png?alt=media&token=87e9c991-5a39-4d37-8e6f-124bb88319f3"
               alt="Equipo de Estrategia Digital"
               layout="fill"
               objectFit="cover"
