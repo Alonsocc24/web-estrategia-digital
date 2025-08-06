@@ -6,11 +6,10 @@ export default function ContactSection() {
       <div className="container mx-auto px-4">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="font-headline text-4xl font-bold text-primary">
-            Let's Build Together
+            Construyamos Juntos
           </h2>
           <p className="mt-2 text-lg text-foreground/80">
-            Have a project in mind or want to learn more about our services?
-            Drop us a line.
+            ¿Tiene un proyecto en mente o desea obtener más información sobre nuestros servicios? Escríbanos.
           </p>
         </div>
         <div className="mx-auto mt-12 max-w-xl">

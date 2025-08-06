@@ -31,7 +31,7 @@ export default function BlogCard({ post }: BlogCardProps) {
       <CardHeader>
         <CardTitle className="font-headline text-xl">{post.title}</CardTitle>
         <CardDescription className="text-sm text-foreground/60">
-          {new Date(post.date).toLocaleDateString("en-US", {
+          {new Date(post.date).toLocaleDateString("es-ES", {
             year: "numeric",
             month: "long",
             day: "numeric",
@@ -44,7 +44,7 @@ export default function BlogCard({ post }: BlogCardProps) {
       <CardFooter>
         <Button asChild variant="link" className="p-0 text-primary">
           <Link href={`/blog/${post.slug}`}>
-            Read More <ArrowRight className="ml-2 h-4 w-4" />
+            Leer Más <ArrowRight className="ml-2 h-4 w-4" />
           </Link>
         </Button>
       </CardFooter>

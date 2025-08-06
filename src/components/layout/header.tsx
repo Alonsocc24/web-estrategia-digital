@@ -9,11 +9,11 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 
 const navLinks = [
-  { href: "/", label: "Home" },
-  { href: "/#services", label: "Services" },
-  { href: "/#about", label: "About Us" },
+  { href: "/", label: "Inicio" },
+  { href: "/#services", label: "Servicios" },
+  { href: "/#about", label: "Nosotros" },
   { href: "/blog", label: "Blog" },
-  { href: "/#contact", label: "Contact" },
+  { href: "/#contact", label: "Contacto" },
 ];
 
 export function AppHeader() {
@@ -61,7 +61,7 @@ export function AppHeader() {
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon">
                 <Menu />
-                <span className="sr-only">Open Menu</span>
+                <span className="sr-only">Abrir Menú</span>
               </Button>
             </SheetTrigger>
             <SheetContent side="left">
@@ -88,7 +88,7 @@ export function AppHeader() {
             <span className="font-bold font-headline">Estrategia Digital</span>
           </Link>
           <Button asChild className="bg-accent text-accent-foreground hover:bg-accent/90">
-            <Link href="/#contact">Get a Quote</Link>
+            <Link href="/#contact">Cotizar</Link>
           </Button>
         </div>
       </div>

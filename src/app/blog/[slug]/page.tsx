@@ -28,7 +28,7 @@ export default function BlogPostPage({
         <Button asChild variant="ghost" className="mb-8">
             <Link href="/blog">
                 <ArrowLeft className="mr-2 h-4 w-4" />
-                Back to Blog
+                Volver al Blog
             </Link>
         </Button>
       </div>
@@ -36,8 +36,8 @@ export default function BlogPostPage({
         {post.title}
       </h1>
       <p className="mt-2 text-foreground/60">
-        Posted on{" "}
-        {new Date(post.date).toLocaleDateString("en-US", {
+        Publicado el{" "}
+        {new Date(post.date).toLocaleDateString("es-ES", {
           year: "numeric",
           month: "long",
           day: "numeric",

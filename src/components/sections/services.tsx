@@ -9,21 +9,21 @@ import { BrainCircuit, CodeXml, Workflow } from "lucide-react";
 const services = [
   {
     icon: <CodeXml className="h-10 w-10 text-primary" />,
-    title: "AI-Powered Websites",
+    title: "Sitios Web con IA",
     description:
-      "Stunning, responsive, and SEO-optimized websites built with the latest AI-driven technologies to ensure maximum performance and user engagement.",
+      "Sitios web impresionantes, responsivos y optimizados para SEO, construidos con las últimas tecnologías de IA para garantizar el máximo rendimiento y la participación del usuario.",
   },
   {
     icon: <Workflow className="h-10 w-10 text-primary" />,
-    title: "Make Automation",
+    title: "Automatización con Make",
     description:
-      "We design and implement powerful Make.com scenarios to automate your business processes, saving you time and reducing operational costs.",
+      "Diseñamos e implementamos potentes escenarios en Make.com para automatizar sus procesos de negocio, ahorrándole tiempo y reduciendo costos operativos.",
   },
   {
     icon: <BrainCircuit className="h-10 w-10 text-primary" />,
-    title: "N8N Integration",
+    title: "Integración con N8N",
     description:
-      "Leverage the power of N8N with our custom workflow automation solutions, connecting your apps and services for seamless data flow.",
+      "Aproveche el poder de N8N con nuestras soluciones de automatización de flujos de trabajo personalizadas, conectando sus aplicaciones y servicios para un flujo de datos sin interrupciones.",
   },
 ];
 
@@ -33,10 +33,10 @@ export default function ServicesSection() {
       <div className="container mx-auto px-4">
         <div className="mb-12 text-center">
           <h2 className="font-headline text-4xl font-bold text-primary">
-            Our Expertise
+            Nuestra Experiencia
           </h2>
           <p className="mt-2 text-lg text-foreground/80">
-            Cutting-edge solutions to elevate your digital presence.
+            Soluciones de vanguardia para elevar su presencia digital.
           </p>
         </div>
         <div className="grid grid-cols-1 gap-8 md:grid-cols-3">

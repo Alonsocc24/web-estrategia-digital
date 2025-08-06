@@ -7,25 +7,19 @@ export default function AboutSection() {
         <div className="grid items-center gap-12 md:grid-cols-2">
           <div className="space-y-4">
             <h2 className="font-headline text-4xl font-bold text-primary">
-              About Estrategia Digital
+              Sobre Estrategia Digital
             </h2>
             <p className="text-lg text-foreground/80">
-              We are a team of passionate developers, designers, and automation
-              experts dedicated to pushing the boundaries of what's possible on
-              the web. Our mission is to empower businesses with intelligent,
-              efficient, and scalable digital solutions.
+              Somos un equipo de apasionados desarrolladores, diseñadores y expertos en automatización dedicados a ampliar los límites de lo posible en la web. Nuestra misión es potenciar a las empresas con soluciones digitales inteligentes, eficientes y escalables.
             </p>
             <p className="text-foreground/70">
-              With a deep understanding of AI, web technologies, and process
-              automation, we transform complex challenges into simple, elegant
-              solutions. We believe in building partnerships, not just
-              projects, and are committed to our clients' success.
+              Con un profundo conocimiento en IA, tecnologías web y automatización de procesos, transformamos desafíos complejos en soluciones simples y elegantes. Creemos en la construcción de alianzas, no solo de proyectos, y estamos comprometidos con el éxito de nuestros clientes.
             </p>
           </div>
           <div className="relative h-80 w-full overflow-hidden rounded-lg shadow-lg">
             <Image
               src="https://placehold.co/600x400"
-              alt="Estrategia Digital Team"
+              alt="Equipo de Estrategia Digital"
               layout="fill"
               objectFit="cover"
               data-ai-hint="team collaboration"
