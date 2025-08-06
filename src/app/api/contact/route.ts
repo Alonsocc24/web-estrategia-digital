@@ -1,23 +1,34 @@
-// Contenido para: src/app/api/contact/route.ts
+// Contenido corregido para: src/app/api/contact/route.ts
 import { Resend } from 'resend';
+import { NextRequest, NextResponse } from 'next/server';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// --- INICIALIZACIÓN SEGURA DE RESEND ---
+// Comprobamos si la API Key existe al iniciar. Si no, el proceso fallará con un error claro.
+const resendApiKey = process.env.RESEND_API_KEY;
+if (!resendApiKey) {
+  throw new Error('La variable de entorno RESEND_API_KEY no está definida.');
+}
+const resend = new Resend(resendApiKey);
 
-export async function POST(request: Request) {
+// --- FUNCIÓN DEL ENDPOINT ---
+export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     const { name, email, phone, message } = body;
 
-    // Validar que los datos importantes existen
+    // --- VALIDACIÓN MÁS ROBUSTA ---
     if (!name || !email || !message) {
-      return new Response('Faltan campos requeridos', { status: 400 });
+      return NextResponse.json({ error: 'Faltan campos requeridos: nombre, email y mensaje son obligatorios.' }, { status: 400 });
     }
 
-    const data = await resend.emails.send({
-      from: 'Estrategia Digital <onboarding@resend.dev>', // Importante: Resend requiere un remitente verificado
-      to: ['hola@estrategiadigital.io'], // <-- ¡¡REEMPLAZA ESTO CON TU EMAIL!!
+    // --- ENVÍO DEL EMAIL ---
+    const { data, error } = await resend.emails.send({
+      // ¡IMPORTANTE! Cambia esto por un email de tu dominio verificado en Resend
+      from: 'Contacto Web <noreply@estrategiadigital.io>', 
+      // ¡IMPORTANTE! Cambia esto por el email donde quieres recibir los mensajes
+      to: ['hola@estrategiadigital.io'],
       subject: `Nuevo Mensaje de Contacto de: ${name}`,
-      reply_to: email, // Para que al responder, le respondas al cliente
+      reply_to: email, // Para que al hacer clic en "Responder", le respondas al cliente
       html: `
         <h1>Nuevo Mensaje de Contacto</h1>
         <p><strong>Nombre:</strong> ${name}</p>
@@ -25,13 +36,22 @@ export async function POST(request: Request) {
         ${phone ? `<p><strong>Teléfono:</strong> ${phone}</p>` : ''}
         <hr>
         <h2>Mensaje:</h2>
-        <p>${message}</p>
+        <p>${message.replace(/\n/g, '<br>')}</p>
       `,
     });
 
-    return Response.json(data);
+    // --- MANEJO DE ERRORES DE RESEND ---
+    if (error) {
+      console.error('Error desde Resend:', error);
+      return NextResponse.json({ error: 'Error al enviar el email.' }, { status: 500 });
+    }
+
+    // --- RESPUESTA EXITOSA ---
+    return NextResponse.json({ success: true, data });
+
   } catch (error) {
-    console.error(error);
-    return Response.json({ error: 'Hubo un error al enviar el mensaje.' }, { status: 500 });
+    // --- MANEJO DE ERRORES GENERALES (ej: JSON mal formado) ---
+    console.error('Error en la API de contacto:', error);
+    return NextResponse.json({ error: 'Hubo un error al procesar la solicitud.' }, { status: 500 });
   }
 }
