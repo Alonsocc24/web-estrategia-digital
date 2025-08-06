@@ -1,13 +1,26 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import ParticlesBackground from "@/components/particles-background";
+import { Badge } from "@/components/ui/badge";
 
 export default function HeroSection() {
   return (
-    <section id="home" className="relative h-[80vh] min-h-[500px] w-full overflow-hidden">
+    <section id="home" className="relative h-auto min-h-[500px] w-full overflow-hidden py-20">
       <ParticlesBackground />
       <div className="relative z-10 flex h-full flex-col items-center justify-center text-center">
         <div className="container px-4">
+          <div className="mb-6 inline-block rounded-lg border border-accent bg-accent/20 p-4 shadow-lg">
+             <div className="flex items-center gap-2">
+                <Badge className="bg-accent text-accent-foreground">¡Oferta de Agosto!</Badge>
+                <p className="text-foreground">
+                  Tu Web Profesional por solo <strong>299€</strong>.
+                </p>
+                <Button asChild size="sm" variant="link" className="text-accent">
+                    <Link href="/#pricing">Ver Oferta →</Link>
+                </Button>
+             </div>
+             <p className="text-sm text-foreground/70 mt-2">Ideal para restaurantes, peluquerías, tiendas y pequeños negocios.</p>
+          </div>
           <h1 className="font-headline text-4xl font-bold tracking-tighter text-primary sm:text-5xl md:text-6xl lg:text-7xl">
             Diseño Web y Automatización con IA
           </h1>
