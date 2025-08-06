@@ -43,9 +43,10 @@ const getFeatureIcon = (feature: string) => {
 
 const plans = [
   {
-    name: "Esencial",
-    description: "Ideal para autónomos, microempresas o startups que necesitan una presencia online profesional para darse a conocer, pero con una inversión inicial controlada.",
-    creationCost: "399€ - 1.500€",
+    name: "Esencial (Oferta Agosto)",
+    description: "Ideal para negocios físicos (restaurantes, peluquerías, tiendas retail...) que necesitan una presencia online profesional, rápida y económica para conectar con clientes locales.",
+    creationCost: "299€",
+    originalCost: "399€",
     maintenanceCost: "200€ - 800€",
     devFeatures: [
       "Página web corporativa básica (3-5 secciones)",
@@ -138,7 +139,12 @@ export default function PricingSection() {
                 <div className="space-y-2">
                     <div className="text-center">
                         <p className="text-sm text-foreground/60">Coste de creación</p>
-                        <p className="text-2xl font-bold">{plan.creationCost}</p>
+                        <div className="flex items-baseline justify-center gap-2">
+                          <p className="text-2xl font-bold">{plan.creationCost}</p>
+                          {(plan as any).originalCost && (
+                             <p className="text-lg font-bold text-destructive line-through">{(plan as any).originalCost}</p>
+                          )}
+                        </div>
                     </div>
                     <div className="text-center">
                         <p className="text-sm text-foreground/60">Mantenimiento anual</p>
