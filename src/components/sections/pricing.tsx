@@ -47,7 +47,7 @@ const plans = [
     description: "Ideal para negocios físicos (restaurantes, peluquerías, tiendas retail...) que necesitan una presencia online profesional, rápida y económica para conectar con clientes locales.",
     creationCost: "299€",
     originalCost: "399€",
-    maintenanceCost: "200€ - 800€",
+    maintenanceCost: "desde 200€",
     devFeatures: [
       "Página web con tus servicios, menú y horarios",
       "Diseño profesional adaptado a tu marca",
