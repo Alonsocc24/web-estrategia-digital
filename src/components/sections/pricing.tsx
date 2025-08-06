@@ -7,7 +7,39 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Check } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Check, ShieldCheck, Rocket, LineChart, Code, Palette, Settings, Zap, Database, Search, MessageSquare, Briefcase, ShoppingCart, CreditCard, Package, GraduationCap } from "lucide-react";
+
+const featureIcons: { [key: string]: React.ReactNode } = {
+  default: <Check className="mr-2 h-5 w-5 flex-shrink-0 text-primary" />,
+  "página web": <Code className="mr-2 h-5 w-5 flex-shrink-0 text-primary" />,
+  "diseño": <Palette className="mr-2 h-5 w-5 flex-shrink-0 text-primary" />,
+  "seo": <Search className="mr-2 h-5 w-5 flex-shrink-0 text-primary" />,
+  "actualizaciones": <Settings className="mr-2 h-5 w-5 flex-shrink-0 text-primary" />,
+  "copias de seguridad": <Database className="mr-2 h-5 w-5 flex-shrink-0 text-primary" />,
+  "seguridad": <ShieldCheck className="mr-2 h-5 w-5 flex-shrink-0 text-primary" />,
+  "dominio y alojamiento": <Briefcase className="mr-2 h-5 w-5 flex-shrink-0 text-primary" />,
+  "estrategia": <LineChart className="mr-2 h-5 w-5 flex-shrink-0 text-primary" />,
+  "integrar herramientas": <Zap className="mr-2 h-5 w-5 flex-shrink-0 text-primary" />,
+  "soporte": <MessageSquare className="mr-2 h-5 w-5 flex-shrink-0 text-primary" />,
+  "licencias 'premium'": <Briefcase className="mr-2 h-5 w-5 flex-shrink-0 text-primary" />,
+  "hosting": <Rocket className="mr-2 h-5 w-5 flex-shrink-0 text-primary" />,
+  "tienda online": <ShoppingCart className="mr-2 h-5 w-5 flex-shrink-0 text-primary" />,
+  "pagos y envíos": <CreditCard className="mr-2 h-5 w-5 flex-shrink-0 text-primary" />,
+  "catálogo de productos": <Package className="mr-2 h-5 w-5 flex-shrink-0 text-primary" />,
+  "formación": <GraduationCap className="mr-2 h-5 w-5 flex-shrink-0 text-primary" />,
+};
+
+const getFeatureIcon = (feature: string) => {
+  const lowerFeature = feature.toLowerCase();
+  for (const key in featureIcons) {
+    if (lowerFeature.includes(key)) {
+      return featureIcons[key];
+    }
+  }
+  return featureIcons.default;
+};
+
 
 const plans = [
   {
@@ -38,7 +70,7 @@ const plans = [
       "Diseño web 100% a medida y único",
       "Estrategia de negocio y conversión",
       "SEO On-Page avanzado desde el inicio",
-      "Integración con herramientas externas (CRM, etc.)",
+      "Integrar herramientas externas (CRM, etc.)",
     ],
     maintenanceFeatures: [
       "Todo lo del Plan Esencial",
@@ -71,7 +103,7 @@ const plans = [
 
 const FeatureListItem = ({ children }: { children: React.ReactNode }) => (
     <li className="flex items-start">
-        <Check className="mr-2 h-5 w-5 flex-shrink-0 text-primary" />
+        {getFeatureIcon(children as string)}
         <span className="text-foreground/80">{children}</span>
     </li>
 );
@@ -90,8 +122,13 @@ export default function PricingSection() {
         </div>
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 items-start">
           {plans.map((plan) => (
-            <Card key={plan.name} className={`flex flex-col h-full ${plan.highlighted ? 'border-primary shadow-lg shadow-primary/20 scale-105' : 'border-border/60'}`}>
-              <CardHeader className="text-center">
+            <Card key={plan.name} className={`relative flex flex-col h-full ${plan.highlighted ? 'border-primary shadow-lg shadow-primary/20 scale-105 bg-secondary' : 'border-border/60'}`}>
+              {plan.highlighted && (
+                <Badge className="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2 bg-accent text-accent-foreground">
+                  Más Popular
+                </Badge>
+              )}
+              <CardHeader className="text-center pt-10">
                 <CardTitle className="font-headline text-3xl text-primary">{plan.name}</CardTitle>
                 <CardDescription className="pt-2 text-base text-foreground/70 min-h-[100px]">
                   {plan.description}
