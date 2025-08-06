@@ -3,6 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
+import React from "react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -16,7 +17,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { Send } from "lucide-react";
+import { Send, Loader2, Check } from "lucide-react";
 
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -32,6 +33,8 @@ const formSchema = z.object({
 
 export function ContactForm() {
   const { toast } = useToast();
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
+  const [isSuccess, setIsSuccess] = React.useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -42,15 +45,27 @@ export function ContactForm() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    setIsSubmitting(true);
     console.log(values);
+
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 2000));
+
     toast({
       title: "¡Mensaje Enviado!",
       description:
         "Gracias por contactarnos. Nos pondremos en contacto contigo en breve.",
       variant: "default",
     });
+    
+    setIsSubmitting(false);
+    setIsSuccess(true);
     form.reset();
+
+    setTimeout(() => {
+        setIsSuccess(false);
+    }, 3000)
   }
 
   return (
@@ -97,10 +112,25 @@ export function ContactForm() {
         />
         <Button
           type="submit"
-          className="w-full bg-accent text-accent-foreground hover:bg-accent/90"
+          className="w-full transition-all"
+          disabled={isSubmitting || isSuccess}
         >
-          <Send className="mr-2 h-4 w-4" />
-          Enviar Mensaje
+          {isSubmitting ? (
+            <>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              Enviando...
+            </>
+          ) : isSuccess ? (
+            <>
+              <Check className="mr-2 h-4 w-4" />
+               ¡Enviado!
+            </>
+          ) : (
+            <>
+              <Send className="mr-2 h-4 w-4" />
+              Enviar Mensaje
+            </>
+          )}
         </Button>
       </form>
     </Form>
