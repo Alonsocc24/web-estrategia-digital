@@ -19,6 +19,10 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { Send, Loader2, Check } from "lucide-react";
 
+const phoneRegex = new RegExp(
+  /^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/
+);
+
 const formSchema = z.object({
   name: z.string().min(2, {
     message: "El nombre debe tener al menos 2 caracteres.",
@@ -26,6 +30,7 @@ const formSchema = z.object({
   email: z.string().email({
     message: "Por favor, introduce una dirección de correo electrónico válida.",
   }),
+  phone: z.string().regex(phoneRegex, 'Número de teléfono inválido').optional().or(z.literal('')),
   message: z.string().min(10, {
     message: "El mensaje debe tener al menos 10 caracteres.",
   }),
@@ -41,6 +46,7 @@ export function ContactForm() {
     defaultValues: {
       name: "",
       email: "",
+      phone: "",
       message: "",
     },
   });
@@ -92,6 +98,19 @@ export function ContactForm() {
               <FormLabel>Correo Electrónico</FormLabel>
               <FormControl>
                 <Input placeholder="tu.email@ejemplo.com" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="phone"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Teléfono (Opcional)</FormLabel>
+              <FormControl>
+                <Input placeholder="Tu número de teléfono" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
