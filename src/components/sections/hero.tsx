@@ -13,7 +13,7 @@ export default function HeroSection() {
            <div className="flex flex-col sm:flex-row items-center justify-center gap-2">
               <Badge className="bg-accent text-accent-foreground mb-2 sm:mb-0">¡Oferta de Agosto!</Badge>
               <p className="text-foreground text-center sm:text-left">
-                Tu Web Profesional por solo <strong>299€</strong>. Ideal para negocios locales.
+                Tu negocio físico online por solo <strong>299€</strong>. ¡Consigue clientes locales!
               </p>
               <Button asChild size="sm" variant="link" className="text-accent p-0 h-auto">
                   <Link href="/#pricing">Ver Oferta →</Link>

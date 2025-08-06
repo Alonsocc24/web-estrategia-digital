@@ -49,10 +49,10 @@ const plans = [
     originalCost: "399€",
     maintenanceCost: "200€ - 800€",
     devFeatures: [
-      "Página web corporativa básica (3-5 secciones)",
-      "Diseño basado en plantilla profesional",
-      "Configuración de SEO básico",
-      "Página 'One-Page' o landing page",
+      "Página web con tus servicios, menú y horarios",
+      "Diseño profesional adaptado a tu marca",
+      "Visibilidad local en Google (SEO básico)",
+      "Presencia online inmediata para tus clientes",
     ],
     maintenanceFeatures: [
       "Actualizaciones técnicas y de plugins",
