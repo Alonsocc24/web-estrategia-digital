@@ -2,8 +2,8 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import * as z from "zod"; 
-import { useState } from "react";
+import * as z from "zod";
+import { useState } from "react"; // React se importa automáticamente en Next.js, pero es buena práctica mantenerlo
 
 import { Button } from "@/components/ui/button";
 import {
@@ -19,31 +19,27 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { Send, Loader2, Check } from "lucide-react";
 
+// Expresión regular mejorada para validar teléfonos de forma más flexible
 const phoneRegex = new RegExp(
   /^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/
 );
 
+// Esquema de validación con Zod
 const formSchema = z.object({
-  name: z.string().min(2, {
-    message: "El nombre debe tener al menos 2 caracteres.",
-  }),
-  email: z.string().email({
-    message: "Por favor, introduce una dirección de correo electrónico válida.",
-  }),
+  name: z.string().min(2, "El nombre debe tener al menos 2 caracteres."),
+  email: z.string().email("Por favor, introduce un correo electrónico válido."),
   phone: z
     .string()
-    .regex(phoneRegex, "Número de teléfono inválido")
-    .min(6, { message: "El número de teléfono parece demasiado corto." })
+    .regex(phoneRegex, "El número de teléfono no es válido.")
+    .min(6, "El número de teléfono es demasiado corto.")
     .optional()
-    .or(z.literal("")),
-  message: z.string().min(10, {
-    message: "El mensaje debe tener al menos 10 caracteres.",
-  }),
+    .or(z.literal("")), // Permite que el campo esté vacío
+  message: z.string().min(10, "El mensaje debe tener al menos 10 caracteres."),
 });
 
+// --- COMPONENTE DEL FORMULARIO ---
 export function ContactForm() {
-  const { toast } = useToast(); 
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { toast } = useToast();
   const [isSuccess, setIsSuccess] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -56,53 +52,55 @@ export function ContactForm() {
     },
   });
 
-  // Reemplaza tu función onSubmit con esta
-async function onSubmit(values: z.infer<typeof formSchema>) {
-  console.log("¡La función onSubmit se ha ejecutado!"); // <--- AÑADE ESTA LÍNEA
-  setIsSubmitting(true);
-  setIsSubmitting(true);
+  // Usamos el estado de 'isSubmitting' que nos provee la librería
+  const { isSubmitting } = form.formState;
 
-  try {
-    const response = await fetch('/api/contact', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(values),
-    });
+  // --- FUNCIÓN DE ENVÍO ---
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    setIsSuccess(false); // Reseteamos el estado de éxito al iniciar un nuevo envío
 
-    if (!response.ok) {
-      throw new Error('La respuesta de la red no fue correcta.');
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(values),
+      });
+
+      if (!response.ok) {
+        // Si hay un error, intentamos leer el mensaje del servidor
+        const errorData = await response.json().catch(() => ({ message: 'Error en el servidor.' }));
+        throw new Error(errorData.error || 'La respuesta de la red no fue correcta.');
+      }
+
+      // Si todo va bien
+      toast({
+        title: "¡Mensaje Enviado!",
+        description: "Gracias por tu mensaje. Nos pondremos en contacto contigo pronto.",
+      });
+      setIsSuccess(true);
+      form.reset(); // Limpiamos el formulario
+
+      // Ocultamos el icono de "check" después de 3 segundos
+      setTimeout(() => setIsSuccess(false), 3000);
+
+    } catch (error: any) {
+      // Si hay un error en la llamada fetch o en el servidor
+      console.error("Error al enviar el formulario:", error);
+      toast({
+        title: "Error al enviar",
+        description: error.message || "Hubo un problema. Por favor, inténtalo de nuevo más tarde.",
+        variant: "destructive",
+      });
     }
-
-    // Si todo va bien
-    toast({
-      title: "¡Mensaje Enviado!",
-      description: "Gracias por tu mensaje. Nos pondremos en contacto contigo pronto.",
-    });
-    setIsSuccess(true);
-    form.reset();
-
-  } catch (error) {
-    // Si hay un error
-    console.error("Error al enviar el formulario:", error);
-    toast({
-      title: "Error al enviar",
-      description: "Hubo un problema. Por favor, inténtalo de nuevo más tarde.",
-      variant: "destructive",
-    });
-  } finally {
-    setIsSubmitting(false);
-    // Resetear el estado del botón después de unos segundos
-    setTimeout(() => {
-        setIsSuccess(false);
-    }, 3000);
   }
-}
 
+  // --- RENDERIZADO DEL COMPONENTE ---
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        {/* Campo Nombre */}
         <FormField
           control={form.control}
           name="name"
@@ -110,12 +108,13 @@ async function onSubmit(values: z.infer<typeof formSchema>) {
             <FormItem>
               <FormLabel>Nombre</FormLabel>
               <FormControl>
-                <Input placeholder="Tu Nombre" {...field} />
+                <Input placeholder="Tu Nombre" {...field} disabled={isSubmitting} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
+        {/* Campo Email */}
         <FormField
           control={form.control}
           name="email"
@@ -123,12 +122,13 @@ async function onSubmit(values: z.infer<typeof formSchema>) {
             <FormItem>
               <FormLabel>Correo Electrónico</FormLabel>
               <FormControl>
-                <Input placeholder="tu.email@ejemplo.com" {...field} />
+                <Input placeholder="tu.email@ejemplo.com" {...field} disabled={isSubmitting} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
+        {/* Campo Teléfono */}
         <FormField
           control={form.control}
           name="phone"
@@ -136,12 +136,13 @@ async function onSubmit(values: z.infer<typeof formSchema>) {
             <FormItem>
               <FormLabel>Teléfono (Opcional)</FormLabel>
               <FormControl>
-                <Input placeholder="Tu número de teléfono" {...field} />
+                <Input placeholder="Tu número de teléfono" {...field} disabled={isSubmitting} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
+        {/* Campo Mensaje */}
         <FormField
           control={form.control}
           name="message"
@@ -149,12 +150,13 @@ async function onSubmit(values: z.infer<typeof formSchema>) {
             <FormItem>
               <FormLabel>Mensaje</FormLabel>
               <FormControl>
-                <Textarea placeholder="Cuéntanos sobre tu proyecto" {...field} />
+                <Textarea placeholder="Cuéntanos sobre tu proyecto" {...field} disabled={isSubmitting} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
+        {/* Botón de Envío */}
         <Button
           type="submit"
           className="w-full transition-all"
