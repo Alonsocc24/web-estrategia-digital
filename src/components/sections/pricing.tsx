@@ -61,6 +61,7 @@ const plans = [
       "Dominio y alojamiento básico incluidos",
     ],
     highlighted: false,
+    cta: "Aprovechar Oferta"
   },
   {
     name: "Profesional",
@@ -80,6 +81,7 @@ const plans = [
       "Hosting de mayor capacidad y velocidad",
     ],
     highlighted: true,
+    cta: "Empezar Ahora"
   },
   {
     name: "E-commerce",
@@ -99,6 +101,7 @@ const plans = [
       "Soporte técnico especializado",
     ],
     highlighted: false,
+    cta: "Solicitar Plan"
   },
 ];
 
@@ -139,12 +142,15 @@ export default function PricingSection() {
                 <div className="space-y-2">
                     <div className="text-center">
                         <p className="text-sm text-foreground/60">Coste de creación</p>
-                        <div className="flex items-baseline justify-center gap-2">
-                          <p className="text-2xl font-bold">{plan.creationCost}</p>
-                          {(plan as any).originalCost && (
-                             <p className="text-lg font-bold text-destructive line-through">{(plan as any).originalCost}</p>
+                         <div className="flex items-baseline justify-center gap-2">
+                          <p className={`text-4xl font-bold ${plan.originalCost ? 'text-accent' : ''}`}>{plan.creationCost}</p>
+                          {plan.originalCost && (
+                             <p className="text-xl font-bold text-destructive line-through">{plan.originalCost}</p>
                           )}
                         </div>
+                        {plan.originalCost && (
+                          <p className="text-xs text-foreground/60 mt-1">Oferta válida hasta el 31 de Agosto</p>
+                        )}
                     </div>
                     <div className="text-center">
                         <p className="text-sm text-foreground/60">Mantenimiento anual</p>
@@ -169,7 +175,7 @@ export default function PricingSection() {
               <CardFooter>
                 <Button asChild className={`w-full ${plan.highlighted ? 'bg-primary hover:bg-primary/90' : 'bg-accent text-accent-foreground hover:bg-accent/90'}`}>
                     <a href="/#contact">
-                        {plan.highlighted ? "Empezar Ahora" : "Solicitar Plan"}
+                        {plan.cta}
                     </a>
                 </Button>
               </CardFooter>
