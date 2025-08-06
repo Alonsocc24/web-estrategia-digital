@@ -47,15 +47,15 @@ export function AppFooter() {
           <ul className="mt-4 space-y-3">
             <li className="flex items-center text-sm text-foreground/80">
               <Mail className="mr-3 h-4 w-4 text-accent" />
-              <span>hola@estrategiadigital.com</span>
+              <span>hola@estrategiadigital.io</span>
             </li>
             <li className="flex items-center text-sm text-foreground/80">
               <Phone className="mr-3 h-4 w-4 text-accent" />
-              <span>+1 (555) 123-4567</span>
+              <span>+34 634 059 119</span>
             </li>
             <li className="flex items-center text-sm text-foreground/80">
               <MapPin className="mr-3 h-4 w-4 text-accent" />
-              <span>123 Tech Hub, Ciudad Innovación</span>
+              <span>Murcia, España</span>
             </li>
           </ul>
         </div>
