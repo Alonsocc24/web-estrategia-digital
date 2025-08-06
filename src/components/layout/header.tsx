@@ -13,6 +13,7 @@ const navLinks = [
   { href: "/#services", label: "Servicios" },
   { href: "/#pricing", label: "Planes" },
   { href: "/#about", label: "Nosotros" },
+  { href: "/#faq", label: "FAQ" },
   { href: "/blog", label: "Blog" },
   { href: "/#contact", label: "Contacto" },
 ];
@@ -24,8 +25,7 @@ export function AppHeader() {
   const NavLink = ({ href, label }: { href: string; label: string }) => {
     const isActive =
       (pathname === "/" && href === "/") ||
-      pathname === href ||
-      pathname.startsWith(`${href}/`);
+      (href !== "/" && pathname.startsWith(href));
     return (
       <Link
         href={href}
