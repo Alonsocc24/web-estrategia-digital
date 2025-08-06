@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Award, Bot, Smile } from "lucide-react";
+import { AnimatedStat } from "../animated-stat";
 
 const stats = [
   {
@@ -37,13 +38,7 @@ export default function AboutSection() {
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 pt-4">
               {stats.map((stat, index) => (
-                <div key={index} className="text-center">
-                  <div className="flex justify-center items-center mb-2">
-                    {stat.icon}
-                  </div>
-                  <p className="text-3xl font-bold text-primary">{stat.value}</p>
-                  <p className="text-sm text-foreground/60">{stat.label}</p>
-                </div>
+                <AnimatedStat key={index} {...stat} />
               ))}
             </div>
           </div>
