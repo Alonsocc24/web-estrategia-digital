@@ -1,19 +1,11 @@
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
 import Link from "next/link";
+import ParticlesBackground from "@/components/particles-background";
 
 export default function HeroSection() {
   return (
-    <section id="home" className="relative h-[80vh] min-h-[500px] w-full">
-      <Image
-        src="https://placehold.co/1920x1080"
-        alt="Diseño web impulsado por IA"
-        layout="fill"
-        objectFit="cover"
-        className="opacity-20"
-        data-ai-hint="abstract technology"
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent" />
+    <section id="home" className="relative h-[80vh] min-h-[500px] w-full overflow-hidden">
+      <ParticlesBackground />
       <div className="relative z-10 flex h-full flex-col items-center justify-center text-center">
         <div className="container px-4">
           <h1 className="font-headline text-4xl font-bold tracking-tighter text-primary sm:text-5xl md:text-6xl lg:text-7xl">
