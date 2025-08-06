@@ -30,8 +30,14 @@ const services = [
 
 export default function ServicesSection() {
   return (
-    <section id="services" className="py-20 md:py-32 bg-background">
-      <div className="container mx-auto px-4">
+    // --- CAMBIOS PRINCIPALES EN ESTA LÍNEA ---
+    <section 
+      id="services" 
+      className="relative py-20 md:py-32 bg-cover bg-center bg-fixed before:content-[''] before:absolute before:inset-0 before:bg-black/70"
+      style={{ backgroundImage: "url('/services-bg.jpg')" }}
+    >
+      {/* Este contenedor ahora necesita estar posicionado relativamente y por encima del overlay */}
+      <div className="relative z-10 container mx-auto px-4">
         <AnimateOnScroll>
           <div className="mb-12 text-center">
             <h2 className="font-headline text-4xl font-bold text-primary">
@@ -49,7 +55,8 @@ export default function ServicesSection() {
               delay={`delay-${index * 100}`}
             >
               <Card
-                className="h-full transform border-border/60 bg-card transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-primary/20"
+                // Ajustamos el fondo de las tarjetas para que destaquen sobre el nuevo fondo
+                className="h-full transform border-border/40 bg-background/80 backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-primary/20"
               >
                 <CardHeader className="items-center text-center">
                   <div className="mb-4 rounded-full bg-primary/10 p-4">
