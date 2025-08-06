@@ -18,7 +18,7 @@ export default function ContactSection() {
         <div className="mx-auto mt-12 max-w-xl space-y-8">
             <div className="rounded-lg border border-accent/50 bg-accent/10 p-4 text-center">
                 <p className="text-foreground/90">
-                ¿Tienes un restaurante, peluquería o tienda? Aprovecha nuestra <Link href="/#pricing" className="font-bold text-accent hover:underline">oferta especial de agosto</Link>: tu web básica por solo 299€.
+                ¿Tienes un restaurante, peluquería o tienda? Aprovecha nuestra <Link href="/#pricing" className="font-bold text-accent underline hover:no-underline">oferta especial de agosto</Link>: tu web básica por solo 299€.
                 </p>
             </div>
             <ContactForm />
