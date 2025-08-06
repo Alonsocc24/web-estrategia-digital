@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Award, Bot, Smile } from "lucide-react";
 import { AnimatedStat } from "../animated-stat";
+import { AnimateOnScroll } from "../animate-on-scroll";
 
 const stats = [
   {
@@ -26,6 +27,7 @@ export default function AboutSection() {
     <section id="about" className="py-20 md:py-32 bg-background">
       <div className="container mx-auto px-4">
         <div className="grid items-center gap-12 md:grid-cols-2 lg:gap-20">
+          <AnimateOnScroll>
           <div className="space-y-6">
             <h2 className="font-headline text-4xl font-bold text-primary">
               Sobre Estrategia Digital
@@ -42,6 +44,8 @@ export default function AboutSection() {
               ))}
             </div>
           </div>
+          </AnimateOnScroll>
+          <AnimateOnScroll delay="delay-100">
           <div className="relative h-96 w-full overflow-hidden rounded-lg shadow-lg">
             <Image
               src="https://firebasestorage.googleapis.com/v0/b/app-proy-1e4a3.appspot.com/o/2c9c7f21-789a-4c28-98e8-6e3e574c8402.png?alt=media&token=87e9c991-5a39-4d37-8e6f-124bb88319f3"
@@ -52,6 +56,7 @@ export default function AboutSection() {
             />
              <div className="absolute inset-0 bg-gradient-to-t from-background/50 to-transparent" />
           </div>
+          </AnimateOnScroll>
         </div>
       </div>
     </section>

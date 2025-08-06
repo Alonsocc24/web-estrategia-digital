@@ -8,7 +8,8 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Check, ShieldCheck, Rocket, LineChart, Code, Palette, Settings, Zap, Database, Search, MessageSquare, Briefcase, ShoppingCart, CreditCard, Package, GraduationCap } from "lucide-react";
+import { Check, ShieldCheck, Rocket, LineChart, Code, Palette, Settings, Zap, Database, Search, MessageSquare, Briefcase, ShoppingCart, CreditCard, Package, GraduationCap, Calendar } from "lucide-react";
+import { AnimateOnScroll } from "../animate-on-scroll";
 
 const featureIcons: { [key: string]: React.ReactNode } = {
   default: <Check className="mr-2 h-5 w-5 flex-shrink-0 text-primary" />,
@@ -116,6 +117,7 @@ export default function PricingSection() {
   return (
     <section id="pricing" className="py-20 md:py-32 bg-card">
       <div className="container mx-auto px-4">
+        <AnimateOnScroll>
         <div className="mb-12 text-center">
           <h2 className="font-headline text-4xl font-bold text-primary">
             Planes a tu Medida
@@ -124,9 +126,15 @@ export default function PricingSection() {
             Soluciones transparentes y adaptadas a cada etapa de tu negocio.
           </p>
         </div>
+        </AnimateOnScroll>
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 items-start">
-          {plans.map((plan) => (
-            <Card key={plan.name} className={`relative flex flex-col h-full ${plan.highlighted ? 'border-primary shadow-lg shadow-primary/20 scale-105 bg-secondary' : 'border-border/60'}`}>
+          {plans.map((plan, index) => (
+             <AnimateOnScroll
+             key={plan.name}
+             delay={`delay-${index * 100}`}
+             className="h-full"
+           >
+            <Card className={`relative flex flex-col h-full ${plan.highlighted ? 'border-primary shadow-lg shadow-primary/20 scale-105 bg-secondary' : 'border-border/60'}`}>
               {plan.highlighted && (
                 <Badge className="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2 bg-accent text-accent-foreground">
                   Más Popular
@@ -149,7 +157,10 @@ export default function PricingSection() {
                           )}
                         </div>
                         {plan.originalCost && (
-                          <p className="text-xs text-foreground/60 mt-1">Oferta válida hasta el 31 de Agosto</p>
+                          <div className="flex justify-center items-center gap-2 mt-1">
+                            <Calendar className="h-4 w-4 text-foreground/60" />
+                            <p className="text-xs text-foreground/60">Oferta válida hasta el 31 de Agosto</p>
+                          </div>
                         )}
                     </div>
                     <div className="text-center">
@@ -180,6 +191,7 @@ export default function PricingSection() {
                 </Button>
               </CardFooter>
             </Card>
+            </AnimateOnScroll>
           ))}
         </div>
       </div>

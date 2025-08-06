@@ -5,6 +5,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { BrainCircuit, CodeXml, Workflow } from "lucide-react";
+import { AnimateOnScroll } from "../animate-on-scroll";
 
 const services = [
   {
@@ -31,32 +32,38 @@ export default function ServicesSection() {
   return (
     <section id="services" className="py-20 md:py-32 bg-background">
       <div className="container mx-auto px-4">
-        <div className="mb-12 text-center">
-          <h2 className="font-headline text-4xl font-bold text-primary">
-            Nuestra Experiencia
-          </h2>
-          <p className="mt-2 text-lg text-foreground/80">
-            Soluciones de vanguardia para elevar su presencia digital.
-          </p>
-        </div>
+        <AnimateOnScroll>
+          <div className="mb-12 text-center">
+            <h2 className="font-headline text-4xl font-bold text-primary">
+              Nuestra Experiencia
+            </h2>
+            <p className="mt-2 text-lg text-foreground/80">
+              Soluciones de vanguardia para elevar su presencia digital.
+            </p>
+          </div>
+        </AnimateOnScroll>
         <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-          {services.map((service) => (
-            <Card
+          {services.map((service, index) => (
+            <AnimateOnScroll
               key={service.title}
-              className="transform border-border/60 bg-card transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-primary/20"
+              delay={`delay-${index * 100}`}
             >
-              <CardHeader className="items-center text-center">
-                <div className="mb-4 rounded-full bg-primary/10 p-4">
-                  {service.icon}
-                </div>
-                <CardTitle className="font-headline text-2xl">
-                  {service.title}
-                </CardTitle>
-                <CardDescription className="pt-2 text-foreground/70">
-                  {service.description}
-                </CardDescription>
-              </CardHeader>
-            </Card>
+              <Card
+                className="h-full transform border-border/60 bg-card transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-primary/20"
+              >
+                <CardHeader className="items-center text-center">
+                  <div className="mb-4 rounded-full bg-primary/10 p-4">
+                    {service.icon}
+                  </div>
+                  <CardTitle className="font-headline text-2xl">
+                    {service.title}
+                  </CardTitle>
+                  <CardDescription className="pt-2 text-foreground/70">
+                    {service.description}
+                  </CardDescription>
+                </CardHeader>
+              </Card>
+            </AnimateOnScroll>
           ))}
         </div>
       </div>
