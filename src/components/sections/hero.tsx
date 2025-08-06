@@ -5,22 +5,25 @@ import { Badge } from "@/components/ui/badge";
 
 export default function HeroSection() {
   return (
-    <section id="home" className="relative h-auto min-h-[500px] w-full overflow-hidden py-20">
+    <section id="home" className="relative h-auto min-h-[500px] w-full overflow-hidden pt-10 pb-20">
       <ParticlesBackground />
+      
+      <div className="container px-4">
+        <div className="mb-8 rounded-lg border border-accent bg-accent/20 p-4 text-center shadow-lg">
+           <div className="flex flex-col sm:flex-row items-center justify-center gap-2">
+              <Badge className="bg-accent text-accent-foreground mb-2 sm:mb-0">¡Oferta de Agosto!</Badge>
+              <p className="text-foreground text-center sm:text-left">
+                Tu Web Profesional por solo <strong>299€</strong>. Ideal para negocios locales.
+              </p>
+              <Button asChild size="sm" variant="link" className="text-accent p-0 h-auto">
+                  <Link href="/#pricing">Ver Oferta →</Link>
+              </Button>
+           </div>
+        </div>
+      </div>
+
       <div className="relative z-10 flex h-full flex-col items-center justify-center text-center">
         <div className="container px-4">
-          <div className="mb-6 inline-block rounded-lg border border-accent bg-accent/20 p-4 shadow-lg">
-             <div className="flex items-center gap-2">
-                <Badge className="bg-accent text-accent-foreground">¡Oferta de Agosto!</Badge>
-                <p className="text-foreground">
-                  Tu Web Profesional por solo <strong>299€</strong>.
-                </p>
-                <Button asChild size="sm" variant="link" className="text-accent">
-                    <Link href="/#pricing">Ver Oferta →</Link>
-                </Button>
-             </div>
-             <p className="text-sm text-foreground/70 mt-2">Ideal para restaurantes, peluquerías, tiendas y pequeños negocios.</p>
-          </div>
           <h1 className="font-headline text-4xl font-bold tracking-tighter text-primary sm:text-5xl md:text-6xl lg:text-7xl">
             Diseño Web y Automatización con IA
           </h1>
