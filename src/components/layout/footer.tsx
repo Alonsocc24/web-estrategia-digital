@@ -1,4 +1,4 @@
-import { Bot, Github, Linkedin, Twitter, Mail, Phone, MapPin } from "lucide-react";
+import { Bot, Facebook, Instagram, Linkedin, Mail, MapPin, Phone } from "lucide-react";
 import Link from "next/link";
 
 const navLinks = [
@@ -63,11 +63,11 @@ export function AppFooter() {
         <div>
             <h3 className="font-headline text-lg font-semibold text-primary">Síguenos</h3>
             <div className="mt-4 flex space-x-4">
-                <Link href="#" aria-label="Twitter">
-                    <Twitter className="h-6 w-6 text-foreground/80 transition-colors hover:text-primary" />
+                <Link href="#" aria-label="Facebook">
+                    <Facebook className="h-6 w-6 text-foreground/80 transition-colors hover:text-primary" />
                 </Link>
-                <Link href="#" aria-label="GitHub">
-                    <Github className="h-6 w-6 text-foreground/80 transition-colors hover:text-primary" />
+                <Link href="#" aria-label="Instagram">
+                    <Instagram className="h-6 w-6 text-foreground/80 transition-colors hover:text-primary" />
                 </Link>
                 <Link href="#" aria-label="LinkedIn">
                     <Linkedin className="h-6 w-6 text-foreground/80 transition-colors hover:text-primary" />
