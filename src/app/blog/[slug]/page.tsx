@@ -50,7 +50,7 @@ export default async function PostPage({ params }: PostPageProps) {
       <div className="text-center mb-8">
         <h1 className="font-headline text-4xl md:text-5xl font-bold text-primary">{title}</h1>
         <p className="mt-4 text-lg text-foreground/60">
-          Publicado el {new Date(date).toLocaleDate_string('es-ES', { year: 'numeric', month: 'long', day: 'numeric' })} por {author}
+          Publicado el {new Date(date).toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' })} por {author}
         </p>
       </div>
       
