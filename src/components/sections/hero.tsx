@@ -1,6 +1,10 @@
+// Contenido FINAL Y COMPLETO para: src/components/sections/hero.tsx
+
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import ParticlesBackground from "@/components/particles-background";
+// --- CORRECCIÓN CLAVE AQUÍ ---
+// Se ha cambiado a una importación nombrada con llaves { }
+import { ParticlesBackground } from "@/components/particles-background";
 import { Badge } from "@/components/ui/badge";
 
 export default function HeroSection() {
