@@ -1,12 +1,12 @@
-// Contenido FINAL Y ROBUSTO para: src/app/blog/[slug]/page.tsx
+// Contenido FINAL Y CORREGIDO para: src/app/blog/[slug]/page.tsx
 
-import { getSortedPostsData } from '@/lib/blog';
+import { getSortedPostsData, getPostData } from '@/lib/blog'; // Re-añadimos getPostData
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
-import { MDXRemote } from 'next-mdx-remote/rsc'; // Usaremos esta librería que es robusta
+import { MDXRemote } from 'next-mdx-remote/rsc'; // Usaremos esta librería
 
 // --- Tipos de Props ---
 type PostPageProps = {
@@ -23,27 +23,24 @@ export async function generateStaticParams() {
 
 // --- Generación de Metadatos SEO ---
 export async function generateMetadata({ params }: PostPageProps): Promise<Metadata> {
-  const posts = getSortedPostsData();
-  const post = posts.find((p) => p.slug === params.slug);
-  if (!post) return { title: 'Artículo no encontrado' };
+  const postData = await getPostData(params.slug);
+  if (!postData) return { title: 'Artículo no encontrado' };
   return {
-    title: `${post.title} | Blog de Estrategia Digital`,
-    description: post.summary,
+    title: `${postData.frontmatter.title} | Blog de Estrategia Digital`,
+    description: postData.frontmatter.summary,
   };
 }
 
 // --- Componente de Página (Componente de Servidor) ---
 export default async function PostPage({ params }: PostPageProps) {
-  const posts = getSortedPostsData();
-  const post = posts.find((p) => p.slug === params.slug);
+  const postData = await getPostData(params.slug);
   
-  if (!post) {
+  if (!postData) {
     notFound();
   }
 
-  // Leemos el contenido del archivo directamente aquí
-  const { content } = await import(`@/content/blog/${params.slug}.mdx`);
-  const { title, date, author, image } = post;
+  const { frontmatter, content } = postData;
+  const { title, date, author, image } = frontmatter;
 
   return (
     <article className="container mx-auto max-w-3xl py-20 md:py-32 px-4">
@@ -61,7 +58,7 @@ export default async function PostPage({ params }: PostPageProps) {
       )}
       
       <div className="prose prose-invert lg:prose-xl mx-auto">
-        {/* Usamos MDXRemote para renderizar el contenido de forma segura */}
+        {/* CORRECCIÓN CLAVE: Pasamos el 'content' a MDXRemote */}
         <MDXRemote source={content} />
       </div>
       

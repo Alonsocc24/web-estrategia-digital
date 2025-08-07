@@ -51,3 +51,17 @@ export function getSortedPostsData() {
   // Ordena los posts por fecha, del más nuevo al más antiguo
   return allPostsData.sort((a, b) => (new Date(b.date).getTime() - new Date(a.date).getTime()));
 }
+
+// Añade de nuevo esta función a src/lib/blog.ts si la borraste
+export async function getPostData(slug: string) {
+    const fullPath = path.join(postsDirectory, `${slug}.mdx`);
+    const fileContents = fs.readFileSync(fullPath, 'utf8');
+
+    const { data, content } = matter(fileContents);
+
+    return {
+        slug,
+        frontmatter: data,
+        content,
+    };
+}
