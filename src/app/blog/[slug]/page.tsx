@@ -1,61 +1,55 @@
-import { posts } from "@/lib/blog-data";
-import { notFound } from "next/navigation";
-import Image from "next/image";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { ArrowLeft } from "lucide-react";
+// Contenido actualizado para: src/app/blog/[slug]/page.tsx
+import { getPostData, getSortedPostsData } from '@/lib/blog';
+import { notFound } from 'next/navigation';
+import { MDXRemote } from 'next-mdx-remote/rsc';
+import type { Metadata } from 'next';
+import Link from 'next/link';
+import Image from 'next/image';
+import { Button } from '@/components/ui/button';
 
+// Genera las rutas para cada post en el momento de la construcción
 export async function generateStaticParams() {
-  return posts.map((post) => ({
-    slug: post.slug,
-  }));
+  const posts = getSortedPostsData();
+  return posts.map((post) => ({ slug: post.slug }));
 }
 
-export default function BlogPostPage({
-  params,
-}: {
-  params: { slug: string };
-}) {
-  const post = posts.find((p) => p.slug === params.slug);
+// Genera los metadatos SEO para cada post
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+  const post = await getPostData(params.slug);
+  if (!post) { return { title: 'Artículo no encontrado' }; }
+  return {
+    title: `${post.frontmatter.title} | Blog de Estrategia Digital`,
+    description: post.frontmatter.summary,
+  };
+}
 
-  if (!post) {
-    notFound();
-  }
+export default async function PostPage({ params }: { params: { slug: string } }) {
+  const post = await getPostData(params.slug);
+  if (!post) { notFound(); }
+
+  const { title, date, author, image } = post.frontmatter;
 
   return (
-    <article className="container mx-auto max-w-4xl px-4 py-20 md:py-32">
-      <div className="mb-8">
-        <Button asChild variant="ghost" className="mb-8">
-            <Link href="/blog">
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                Volver al Blog
-            </Link>
-        </Button>
+    <article className="container mx-auto max-w-3xl py-20 md:py-32 px-4">
+      <div className="text-center mb-8">
+        <h1 className="font-headline text-4xl md:text-5xl font-bold text-primary">{title}</h1>
+        <p className="mt-4 text-lg text-foreground/60">
+          Publicado el {new Date(date).toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' })} por {author}
+        </p>
       </div>
-      <h1 className="font-headline text-4xl font-bold text-primary md:text-5xl">
-        {post.title}
-      </h1>
-      <p className="mt-2 text-foreground/60">
-        Publicado el{" "}
-        {new Date(post.date).toLocaleDateString("es-ES", {
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-        })}
-      </p>
-      <div className="relative my-8 h-96 w-full overflow-hidden rounded-lg">
-        <Image
-          src={post.image}
-          alt={post.title}
-          layout="fill"
-          objectFit="cover"
-          data-ai-hint="technology blog"
-        />
+      {image && (
+        <div className="relative h-64 md:h-96 w-full overflow-hidden rounded-lg shadow-lg mb-8">
+          <Image src={image} alt={`Imagen de portada para ${title}`} fill className="object-cover" />
+        </div>
+      )}
+      <div className="prose prose-invert lg:prose-xl mx-auto">
+        <MDXRemote source={post.content} />
       </div>
-      <div
-        className="prose prose-invert max-w-none text-foreground/90 prose-p:text-lg prose-headings:text-primary prose-a:text-accent prose-strong:text-foreground"
-        dangerouslySetInnerHTML={{ __html: post.content }}
-      />
+      <div className="mt-12 border-t border-foreground/20 pt-8 text-center">
+        <Link href="/blog">
+          <Button variant="outline">← Ver todos los artículos</Button>
+        </Link>
+      </div>
     </article>
   );
 }
