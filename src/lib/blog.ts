@@ -1,4 +1,4 @@
-// Contenido FINAL y CORREGIDO para: src/lib/blog.ts
+// Contenido FINAL Y COMPLETO para: src/lib/blog.ts
 
 import fs from 'fs';
 import path from 'path';
@@ -7,6 +7,17 @@ import matter from 'gray-matter';
 // Apuntamos a la carpeta donde están nuestros artículos.
 // process.cwd() es la raíz de tu proyecto.
 const postsDirectory = path.join(process.cwd(), 'content/blog');
+
+/**
+ * Define la estructura de datos que esperamos del frontmatter de cada artículo.
+ */
+type Frontmatter = {
+  title: string;
+  date: string;
+  summary: string;
+  author: string;
+  image: string;
+};
 
 /**
  * Lee todos los archivos .mdx de la carpeta /content/blog,
@@ -30,15 +41,6 @@ export function getSortedPostsData() {
     // Usa gray-matter para separar los metadatos (frontmatter) del contenido
     const matterResult = matter(fileContents);
 
-    // Define el tipo de datos que esperamos del frontmatter para TypeScript
-    type Frontmatter = {
-      title: string;
-      date: string;
-      summary: string;
-      author: string;
-      image: string;
-    };
-
     // Combina los datos del frontmatter con el slug
     return {
       slug,
@@ -47,5 +49,5 @@ export function getSortedPostsData() {
   });
 
   // Ordena los posts por fecha, del más nuevo al más antiguo
-  return allPostsData.sort((a, b) => (a.date < b.date ? 1 : -1));
+  return allPostsData.sort((a, b) => (new Date(b.date).getTime() - new Date(a.date).getTime()));
 }
