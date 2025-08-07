@@ -56,7 +56,7 @@ export default function ServicesSection() {
             >
               <Card
                 // Ajustamos el fondo de las tarjetas para que destaquen sobre el nuevo fondo
-                className="h-full transform border-border/40 bg-background/90 backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-primary/20"
+                className="h-full transform border-border/[.40] bg-background/90 backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-primary/20"
               >
                 <CardHeader className="items-center text-center">
                   <div className="mb-4 rounded-full bg-primary/10 p-4">
