@@ -24,6 +24,6 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
   };
 }
 
-export default function Page({ params }: PostPageProps) {
+export default async function Page({ params }: PostPageProps) {
   return <PostContent slug={params.slug} />;
 }
