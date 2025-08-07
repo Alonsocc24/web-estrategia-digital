@@ -45,9 +45,14 @@ const ParticlesBackground = () => {
       speedY: number;
 
       constructor() {
+        if (canvas) {
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height;
-        this.size = Math.random() * 2 + 1;
+        } else {
+          this.x = 0;
+          this.y = 0;
+        }
+        this.size = Math.random() * 2 + 0.5;
         this.speedX = Math.random() * 1.5 - 0.75;
         this.speedY = Math.random() * 1.5 - 0.75;
       }
