@@ -1,21 +1,19 @@
-// Contenido actualizado para: src/app/blog/[slug]/page.tsx
-import { getPostData, getSortedPostsData } from '@/lib/blog';
+// Contenido MUCHO MÁS SIMPLE para: src/app/blog/[slug]/page.tsx
+import { getSortedPostsData } from '@/lib/blog';
 import { notFound } from 'next/navigation';
-import { MDXRemote } from 'next-mdx-remote/rsc';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
+import { importMdx } from '@/lib/mdx-utils'; // Crearemos este archivo ahora
 
-// Genera las rutas para cada post en el momento de la construcción
 export async function generateStaticParams() {
   const posts = getSortedPostsData();
   return posts.map((post) => ({ slug: post.slug }));
 }
 
-// Genera los metadatos SEO para cada post
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const post = await getPostData(params.slug);
+  const post = (await importMdx(params.slug))?.post;
   if (!post) { return { title: 'Artículo no encontrado' }; }
   return {
     title: `${post.frontmatter.title} | Blog de Estrategia Digital`,
@@ -24,8 +22,8 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 }
 
 export default async function PostPage({ params }: { params: { slug: string } }) {
-  const post = await getPostData(params.slug);
-  if (!post) { notFound(); }
+  const { post, MdxContent } = (await importMdx(params.slug)) ?? {};
+  if (!post || !MdxContent) { notFound(); }
 
   const { title, date, author, image } = post.frontmatter;
 
@@ -43,7 +41,7 @@ export default async function PostPage({ params }: { params: { slug: string } })
         </div>
       )}
       <div className="prose prose-invert lg:prose-xl mx-auto">
-        <MDXRemote source={post.content} />
+        <MdxContent />
       </div>
       <div className="mt-12 border-t border-foreground/20 pt-8 text-center">
         <Link href="/blog">

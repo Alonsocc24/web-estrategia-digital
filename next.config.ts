@@ -1,29 +1,11 @@
-import type {NextConfig} from 'next';
+// Contenido para: next.config.ts
+const withMDX = require('@next/mdx')()
 
-const nextConfig: NextConfig = {
-  /* config options here */
-  typescript: {
-    ignoreBuildErrors: true,
-  },
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-  images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'placehold.co',
-        port: '',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'firebasestorage.googleapis.com',
-        port: '',
-        pathname: '/**',
-      },
-    ],
-  },
-};
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  // Configura `pageExtensions` para incluir archivos `mdx`
+  pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
+  // Opcionalmente, añade cualquier otra configuración de Next.js que tengas
+}
 
-export default nextConfig;
+module.exports = withMDX(nextConfig)
