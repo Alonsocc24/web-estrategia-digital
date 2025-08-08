@@ -116,7 +116,7 @@ export function ParticlesBackground() {
   return (
     <div className="absolute inset-0 -z-10">
       <canvas ref={canvasRef} className="h-full w-full bg-background" />
-      <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-t from-background via-background/90 to-background/40" />
     </div>
   );
 }
