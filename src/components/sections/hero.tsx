@@ -11,7 +11,7 @@ export default function HeroSection() {
   return (
     <section
       id="home"
-      className="relative h-auto min-h-[500px] w-full overflow-hidden pt-10 pb-20 md:h-[80vh]"
+      className="relative h-auto min-h-[450px] w-full overflow-hidden pt-10 pb-20 md:h-[80vh]"
     >
       <ParticlesBackground />
 
