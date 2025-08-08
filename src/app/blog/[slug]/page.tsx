@@ -1,12 +1,12 @@
-// Contenido FINAL Y CORREGIDO para: src/app/blog/[slug]/page.tsx
+// Contenido FINAL Y COMPLETO para: src/app/blog/[slug]/page.tsx
 
-import { getSortedPostsData, getPostData } from '@/lib/blog'; // Re-añadimos getPostData
+import { getSortedPostsData, getPostData } from '@/lib/blog';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
-import { MDXRemote } from 'next-mdx-remote/rsc'; // Usaremos esta librería
+import { MDXRemote } from 'next-mdx-remote/rsc';
 
 // --- Tipos de Props ---
 type PostPageProps = {
@@ -21,13 +21,46 @@ export async function generateStaticParams() {
   return posts.map((post) => ({ slug: post.slug }));
 }
 
-// --- Generación de Metadatos SEO ---
+// --- Generación de Metadatos SEO (VERSIÓN MEJORADA) ---
 export async function generateMetadata({ params }: PostPageProps): Promise<Metadata> {
   const postData = await getPostData(params.slug);
-  if (!postData) return { title: 'Artículo no encontrado' };
+
+  if (!postData) {
+    return { title: 'Artículo no encontrado' };
+  }
+
+  const { title, summary, image } = postData.frontmatter;
+
+  // Construye la URL completa de la imagen para Open Graph
+  const imageUrl = `https://www.estrategiadigital.io${image}`;
+
   return {
-    title: `${postData.frontmatter.title} | Blog de Estrategia Digital`,
-    description: postData.frontmatter.summary,
+    title: `${title} | Blog de Estrategia Digital`,
+    description: summary,
+    // --- SECCIÓN DE OPEN GRAPH (LA CLAVE) ---
+    openGraph: {
+      title: title,
+      description: summary,
+      url: `https://www.estrategiadigital.io/blog/${params.slug}`,
+      siteName: 'Estrategia Digital',
+      images: [
+        {
+          url: imageUrl, // URL completa de la imagen
+          width: 1200,   // Ancho recomendado
+          height: 630,   // Alto recomendado
+          alt: title,
+        },
+      ],
+      locale: 'es_ES',
+      type: 'article',
+    },
+    // --- Opcional pero recomendado: Twitter Cards ---
+    twitter: {
+        card: 'summary_large_image',
+        title: title,
+        description: summary,
+        images: [imageUrl],
+    }
   };
 }
 
@@ -58,7 +91,6 @@ export default async function PostPage({ params }: PostPageProps) {
       )}
       
       <div className="prose prose-invert lg:prose-xl mx-auto">
-        {/* CORRECCIÓN CLAVE: Pasamos el 'content' a MDXRemote */}
         <MDXRemote source={content} />
       </div>
       
