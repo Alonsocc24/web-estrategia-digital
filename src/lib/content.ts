@@ -48,4 +48,5 @@ export const services = [
     icon: BrainCircuit,
     title: "Consultoría e Integración",
     description:
-      "Aproveche el poder de la IA con nuestras soluciones personalizadas, conect
+      "Aproveche el poder de la IA con nuestras soluciones personalizadas, conectando sus aplicaciones y optimizando flujos de trabajo.", // <-- ASEGÚRATE DE QUE LA LÍNEA TERMINA ASÍ
+},```
