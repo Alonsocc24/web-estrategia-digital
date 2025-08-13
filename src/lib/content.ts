@@ -49,4 +49,4 @@ export const services = [
     title: "Consultoría e Integración",
     description:
       "Aproveche el poder de la IA con nuestras soluciones personalizadas, conectando sus aplicaciones y optimizando flujos de trabajo.", // <-- ASEGÚRATE DE QUE LA LÍNEA TERMINA ASÍ
-},```
+},
