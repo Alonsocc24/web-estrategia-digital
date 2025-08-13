@@ -43,3 +43,5 @@ next-env.d.ts
 # firebase
 firebase-debug.log
 firestore-debug.log
+# Variables de entorno locales. ¡No subir a GitHub!
+.env.local
