@@ -102,3 +102,6 @@ export const plans = [
       { icon: Package, text: "Tienda online (e-commerce)" },
       { icon: Bot, text: "Integraciones con APIs y IA" },
       { icon: Zap, text: "Automatizaciones Rápidas" },
+          ], // <-- 1. AÑADE LA COMA Y EL CORCHETE DE CIERRE DEL ARRAY
+  }, // <-- 2. AÑADE LA COMA Y LA LLAVE DE CIERRE DEL OBJETO
+]; // <-- 3. ASEGÚRATE DE QUE EL CORCHETE FINAL DEL ARRAY 'plans' ESTÉ AHÍ
