@@ -101,4 +101,5 @@ export const plans = [
       { icon: Gem, text: "Desarrollo 100% personalizado" },
       { icon: Package, text: "Tienda online (e-commerce)" },
       { icon: Bot, text: "Integraciones con APIs y IA" },
-      { icon: Zap,
+      { icon: Zap, text: "Automatizaciones Rápidas" }, // <-- LÍNEA CORREGIDA Y COMPLETADA
+// ...
