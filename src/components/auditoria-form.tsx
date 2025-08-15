@@ -1,10 +1,11 @@
-// Contenido completo para: src/components/auditoria-form.tsx
+// Contenido FINAL Y COMPLETO para: src/components/auditoria-form.tsx
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { useState } from "react";
+import Link from "next/link"; // <-- 1. IMPORTAMOS EL COMPONENTE LINK
 
 import { Button } from "@/components/ui/button";
 import {
@@ -14,16 +15,22 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
+  FormDescription, // <-- IMPORTAMOS FormDescription
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { Send, Loader2, Check } from "lucide-react";
+import { Checkbox } from "@/components/ui/checkbox"; // <-- 2. IMPORTAMOS EL COMPONENTE CHECKBOX
 
-// Esquema de validación con Zod
+// Esquema de validación con Zod (actualizado)
 const formSchema = z.object({
   name: z.string().min(2, "El nombre debe tener al menos 2 caracteres."),
   email: z.string().email("Por favor, introduce un correo electrónico válido."),
   websiteUrl: z.string().url({ message: "Por favor, introduce una URL válida (ej: https://...)" }),
+  // --- 3. AÑADIMOS EL CAMPO DE POLÍTICA DE PRIVACIDAD AL ESQUEMA ---
+  privacyPolicy: z.boolean().refine(value => value === true, {
+    message: "Debes aceptar la política de privacidad para continuar.",
+  }),
 });
 
 export function AuditoriaForm() {
@@ -36,6 +43,7 @@ export function AuditoriaForm() {
       name: "",
       email: "",
       websiteUrl: "",
+      privacyPolicy: false, // <-- 4. AÑADIMOS EL VALOR POR DEFECTO
     },
   });
 
@@ -45,7 +53,7 @@ export function AuditoriaForm() {
     setIsSuccess(false);
 
     try {
-      const response = await fetch('/api/auditoria', { // <-- Apunta a nuestra nueva API
+      const response = await fetch('/api/auditoria', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -118,6 +126,37 @@ export function AuditoriaForm() {
             </FormItem>
           )}
         />
+        
+        {/* --- 5. AÑADIMOS EL CAMPO DEL CHECKBOX AL FORMULARIO --- */}
+        <FormField
+          control={form.control}
+          name="privacyPolicy"
+          render={({ field }) => (
+            <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4 shadow-sm">
+              <FormControl>
+                <Checkbox
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                  disabled={isSubmitting}
+                />
+              </FormControl>
+              <div className="space-y-1 leading-none">
+                <FormLabel>
+                  Acepto la Política de Privacidad
+                </FormLabel>
+                <FormDescription>
+                  He leído y acepto los términos de la{" "}
+                  <Link href="/politica-de-privacidad" className="underline hover:text-primary" target="_blank" rel="noopener noreferrer">
+                    política de privacidad
+                  </Link>
+                  .
+                </FormDescription>
+                <FormMessage />
+              </div>
+            </FormItem>
+          )}
+        />
+
         <Button
           type="submit"
           size="lg"
